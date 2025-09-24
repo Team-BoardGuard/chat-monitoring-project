@@ -1,0 +1,5 @@
+package com.guard.communityservice.repository;
+
+public class UserRepository {
+
+}

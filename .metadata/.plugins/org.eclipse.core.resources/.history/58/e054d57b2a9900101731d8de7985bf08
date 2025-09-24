@@ -1,0 +1,6 @@
+package com.guard.communityservice.repository;
+
+@Repository
+public class UserRepository extends JpaRepository<User, Long> {
+
+}

@@ -1,0 +1,5 @@
+package com.guard.communityservice.controller;
+
+public class SecurityConfig {
+
+}

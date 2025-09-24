@@ -1,0 +1,52 @@
+package com.guard.communityservice.controller;
+
+import java.util.Map;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.guard.communityservice.dto.SignupRequestDto;
+import com.guard.communityservice.service.UserService;
+
+import lombok.RequiredArgsConstructor;
+
+@Controller
+//@RequiredArgsConstructor
+public class UserController {
+	
+	private final UserService userService;
+	
+	public UserController(UserService userService) {
+        this.userService = userService;
+    }
+	
+    // --- 웹 페이지 라우팅 ---
+    @GetMapping("/user/signup")
+    public String showSignupForm(Model model) {
+        // Thymeleaf 폼 바인딩을 위해 빈 DTO 객체를 모델에 추가합니다.
+        model.addAttribute("signupRequestDto", new SignupRequestDto());
+        return "signup"; // templates/signup.html을 찾아서 반환
+    }
+
+    @PostMapping("/user/signup")
+    public String processSignup(SignupRequestDto requestDto) {
+        userService.signup(requestDto);
+        return "redirect:/login"; // 성공 시 로그인 페이지로 이동
+    }
+
+    // --- API 엔드포인트 ---
+    @GetMapping("/api/user/check-nickname")
+    @ResponseBody // 이 메소드의 반환값은 View가 아닌 데이터(JSON)임을 명시
+    public ResponseEntity<?> checkNicknameDuplication(@RequestParam("nickname") String nickname) {
+        boolean isAvailable = userService.isNicknameAvailable(nickname);
+        // JS에서 사용하기 쉽도록 Map 형태로 JSON 응답을 보냅니다.
+        return ResponseEntity.ok(Map.of("isAvailable", isAvailable));
+    }
+}

@@ -1,0 +1,5 @@
+package com.guard.communityservice.dto;
+
+public class SignupRequestDto {
+
+}

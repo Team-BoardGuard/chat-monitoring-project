@@ -1,0 +1,5 @@
+package com.guard.communityservice.service;
+
+public class UserService {
+
+}
