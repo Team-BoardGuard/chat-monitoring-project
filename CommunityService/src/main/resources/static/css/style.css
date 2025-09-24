@@ -1,0 +1,16 @@
+/* ... (이전 CSS 코드와 대부분 동일) ... */
+
+/* 닉네임 중복 확인 메시지 스타일 */
+#nickname-check-msg {
+    font-size: 0.8rem;
+    padding-top: 5px;
+}
+.available { color: green; }
+.unavailable { color: red; }
+
+/* 서버 에러 메시지 스타일 */
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}

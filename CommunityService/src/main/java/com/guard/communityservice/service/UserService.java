@@ -1,0 +1,44 @@
+package com.guard.communityservice.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.guard.communityservice.domain.User;
+import com.guard.communityservice.dto.SignupRequestDto;
+import com.guard.communityservice.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor // final 필드를 위한 생성자를 자동으로 만들어줍니다.
+public class UserService {
+	
+	private final UserRepository userRepository;
+	
+    private final PasswordEncoder passwordEncoder;
+
+    @Transactional
+    public Long signup(SignupRequestDto requestDto) {
+        if (userRepository.existsByNickname(requestDto.getNickname())) {
+            throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
+        }
+
+        String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
+
+        User user = User.builder()
+                .name(requestDto.getName())
+                .nickname(requestDto.getNickname())
+                .password(encodedPassword)
+                .build();
+        
+        User savedUser = userRepository.save(user);
+        return savedUser.getId();
+    }
+
+    @Transactional(readOnly = true) // 읽기 전용 트랜잭션으로 성능 최적화
+    public boolean isNicknameAvailable(String nickname) {
+        return !userRepository.existsByNickname(nickname);
+    }
+}
