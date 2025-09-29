@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>내 정보 - 커뮤니티</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Conditional Header based on Spring Security authentication -->
+        <div sec:authorize="isAuthenticated()" id="top-bar-logged-in" class="top-bar profile-bar">
+            <div class="profile-pic"></div>
+            <span class="profile-name" th:text="${currentUser?.nickname}"></span> <!-- Display nickname -->
+            <a th:href="@{/logout}">로그아웃</a>
+        </div>
+
+        <div sec:authorize="isAnonymous()" id="top-bar-logged-out" class="top-bar">
+            <a th:href="@{/login}">로그인</a> | <a th:href="@{/signup}">회원가입</a>
+        </div>
+
+        <header>
+            <h1>커뮤니티</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="게시글 검색..." class="search-input">
+                <button type="submit">검색</button>
+            </div>
+        </header>
+
+        <!-- Consistent Navigation -->
+        <nav>
+            <ul>
+                <li><a th:href="@{/home}"><i>🏠</i> 홈</a></li>
+                <li><a th:href="@{/gallery}"><i>🖼️</i> 갤러리</a></li>
+                <li><a th:href="@{/freeboard}"><i>📝</i> 자유게시판</a></li>
+                <li><a th:href="@{/my-info}"><i>👤</i> 내 정보</a></li>
+            </ul>
+        </nav>
+
+        <!-- My Info Specific Content -->
+        <main>
+            <!-- Flash Messages -->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger">
+                <p th:text="${errorMessage}"></p>
+            </div>
+
+            <div class="main-header-row">
+                <h2>내 정보</h2>
+                <div class="profile-actions">
+                    <button onclick="window.location.href='/edit-profile'" class="btn btn-primary">회원정보 수정</button>
+                    <button class="btn btn-danger" onclick="confirmDelete()">회원 탈퇴</button>
+                </div>
+            </div>
+            <div class="profile-container">
+                <dl class="profile-details">
+                    <dt>아이디</dt>
+                    <dd sec:authentication="name">sampleUser</dd> <!-- Display actual username -->
+
+                    <dt>닉네임</dt>
+                    <dd th:text="${user?.nickname ?: '샘플유저'}">샘플유저</dd> <!-- Display actual nickname -->
+
+                    <dt>비밀번호</dt>
+                    <dd>******** <a th:href="@{/change-password}" class="btn-change">변경</a></dd>
+
+                    <dt>가입일</dt>
+                    <dd th:text="${user?.createdAt?.toLocalDate()} ?: '2025-09-27'">2025-09-27</dd>
+
+                    <dt>경고 횟수</dt>
+                    <dd th:text="${user?.warnCount ?: 0}">0</dd>
+                </dl>
+            </div>
+        </main>
+    <script>
+        function confirmDelete() {
+            if (confirm("정말로 회원 탈퇴를 하시겠습니까?")) {
+                window.location.href = "/confirm-delete"; // Redirect to confirmation page
+            }
+        }
+    </script>
+
+        <!-- Consistent Footer -->
+        <footer>
+            <p>&copy; 2025 커뮤니티. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

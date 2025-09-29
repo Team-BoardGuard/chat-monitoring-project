@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-page">
+    <div class="login-box">
+        <h1 class="login-logo">Community</h1>
+        <form th:action="@{/signup}" th:object="${userForm}" method="post">
+            <div class="input-group">
+                <input type="text" id="username" th:field="*{username}" placeholder="아이디" required>
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-text"></p>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" th:field="*{password}" placeholder="비밀번호" required>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-text"></p>
+            </div>
+            <div class="input-group">
+                <input type="text" id="nickname" th:field="*{nickname}" placeholder="닉네임" required>
+                <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="error-text"></p>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" th:field="*{email}" placeholder="이메일" required> <!-- Added email field -->
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-text"></p>
+            </div>
+            <button type="submit" class="btn-login">가입하기</button>
+        </form>
+        <div class="login-links">
+            <a th:href="@{/login}">로그인 페이지로 돌아가기</a>
+        </div>
+    </div>
+</body>
+</html>

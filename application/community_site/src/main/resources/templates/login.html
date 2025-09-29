@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-page">
+    <div class="login-box">
+        <h1 class="login-logo">Community</h1>
+        <form th:action="@{/login}" method="post">
+            <div class="input-group">
+                <input type="text" id="username" name="username" placeholder="아이디" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="비밀번호" required>
+            </div>
+            <!-- Error/Success Messages from Controller -->
+            <div th:if="${errorMessage}" class="error-text" style="display: block;">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            <div th:if="${logoutMessage}" class="success-text" style="display: block;">
+                <p th:text="${logoutMessage}"></p>
+            </div>
+            <div th:if="${signupSuccessMessage}" class="success-text" style="display: block;">
+                <p th:text="${signupSuccessMessage}"></p>
+            </div>
+            <button type="submit" class="btn-login">로그인</button>
+        </form>
+        <div class="login-links">
+            <a th:href="@{/signup}">회원가입</a>
+            <span class="separator">|</span>
+            <a href="#">계정 찾기</a>
+        </div>
+    </div>
+    <!-- Remove client-side script for error handling as it's now server-side -->
+</body>
+</html>
