@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>자유게시판 - 커뮤니티</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Conditional Header based on Spring Security authentication -->
+        <div sec:authorize="isAuthenticated()" id="top-bar-logged-in" class="top-bar profile-bar">
+            <div class="profile-pic"></div>
+            <span class="profile-name" th:text="${currentUser?.nickname}"></span> <!-- Display nickname -->
+            <a th:href="@{/logout}">로그아웃</a>
+        </div>
+
+        <div sec:authorize="isAnonymous()" id="top-bar-logged-out" class="top-bar">
+            <a th:href="@{/login}">로그인</a> | <a th:href="@{/signup}">회원가입</a>
+        </div>
+
+        <header>
+            <h1>커뮤니티</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="게시글 검색..." class="search-input">
+                <button type="submit">검색</button>
+            </div>
+        </header>
+
+        <!-- Consistent Navigation -->
+        <nav>
+            <ul>
+                <li><a th:href="@{/home}"><i>🏠</i> 홈</a></li>
+                <li><a th:href="@{/gallery}"><i>🖼️</i> 갤러리</a></li>
+                <li><a th:href="@{/freeboard}"><i>📝</i> 자유게시판</a></li>
+                <li><a th:href="@{/my-info}"><i>👤</i> 내 정보</a></li>
+            </ul>
+        </nav>
+
+        <!-- Freeboard Specific Content -->
+        <main>
+            <h2>자유게시판</h2>
+            <table class="board-table">
+                <thead>
+                    <tr>
+                        <th class="col-num">번호</th>
+                        <th class="col-title">제목</th>
+                        <th class="col-author">글쓴이</th>
+                        <th class="col-date">작성일</th>
+                        <th class="col-views">조회</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>101</td>
+                        <td class="title"><a href="#">저녁 메뉴 추천 받습니다</a></td>
+                        <td>맛잘알</td>
+                        <td>10:35</td>
+                        <td>58</td>
+                    </tr>
+                    <tr>
+                        <td>100</td>
+                        <td class="title"><a href="#">Spring Boot JPA 질문 있어요</a></td>
+                        <td>코린이</td>
+                        <td>09:12</td>
+                        <td>121</td>
+                    </tr>
+                    <tr>
+                        <td>99</td>
+                        <td class="title"><a href="#">오늘 날씨 좋네요</a></td>
+                        <td>산책왕</td>
+                        <td>08:55</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td>98</td>
+                        <td class="title"><a href="#">[공지] 커뮤니티 이용 수칙 안내</a></td>
+                        <td>관리자</td>
+                        <td>08:00</td>
+                        <td>1058</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Pagination would go here -->
+        </main>
+
+        <!-- Consistent Footer -->
+        <footer>
+            <p>&copy; 2025 커뮤니티. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

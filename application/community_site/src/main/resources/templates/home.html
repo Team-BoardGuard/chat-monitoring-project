@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>커뮤니티 홈</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Conditional Header based on Spring Security authentication -->
+        <div sec:authorize="isAuthenticated()" id="top-bar-logged-in" class="top-bar profile-bar">
+            <div class="profile-pic"></div>
+            <span class="profile-name" th:text="${currentUser?.nickname}"></span> <!-- Display nickname -->
+            <a th:href="@{/logout}">로그아웃</a>
+        </div>
+
+        <div sec:authorize="isAnonymous()" id="top-bar-logged-out" class="top-bar">
+            <a th:href="@{/login}">로그인</a> | <a th:href="@{/signup}">회원가입</a>
+        </div>
+
+        <header>
+            <h1>커뮤니티</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="게시글 검색..." class="search-input">
+                <button type="submit">검색</button>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a th:href="@{/home}"><i>🏠</i> 홈</a></li>
+                <li><a th:href="@{/gallery}"><i>🖼️</i> 갤러리</a></li>
+                <li><a th:href="@{/freeboard}"><i>📝</i> 자유게시판</a></li>
+                <li><a th:href="@{/my-info}"><i>👤</i> 내 정보</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="board-list-main">
+                <h2>최신 게시글</h2>
+                <p>공지: 커뮤니티 이용 수칙 안내</p>
+                <p>자유: 오늘 점심 뭐 먹지?</p>
+                <p>질문: Spring Boot 설정 질문합니다.</p>
+                <p>유머: ㅋㅋㅋ 오늘 있었던 일</p>
+                <p>사진: 주말 나들이 사진</p>
+                <!-- 실시간으로 올라오는 게시글 목록이 여기에 표시됩니다. -->
+            </div>
+
+            <div class="board-categories">
+                <h2>게시판 카테고리</h2>
+                <ul>
+                    <li><a href="#">전체 게시판</a></li>
+                    <li><a href="#">주요 갤러리</a></li>
+                    <li><a href="#">일반 게시판</a></li>
+                    <li><a href="#">정보 게시판</a></li>
+                </ul>
+            </div>
+
+            <div class="image-showcase">
+                <h2>추천 이미지</h2>
+                <!-- 이미지가 여기에 표시됩니다. -->
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 커뮤니티. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

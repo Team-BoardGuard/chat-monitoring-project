@@ -1,0 +1,11 @@
+com\example\authapp\user\Role.class
+com\example\authapp\user\ProfileEditForm.class
+com\example\authapp\user\PasswordChangeForm.class
+com\example\authapp\user\UserRepository.class
+com\example\authapp\config\GlobalControllerAdvice.class
+com\example\authapp\user\User.class
+com\example\authapp\user\UserController.class
+com\example\authapp\user\UserService.class
+com\example\authapp\AuthappApplication.class
+com\example\authapp\config\SecurityConfig.class
+com\example\authapp\user\UserForm.class
