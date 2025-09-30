@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.authapp.post.PostService;
+
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
@@ -16,10 +18,12 @@ import java.security.Principal;
 public class UserController {
 
     private final UserService userService;
+    private final PostService postService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
 
     @PostMapping("/signup")
@@ -40,7 +44,8 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String showRootPage() {
+    public String showRootPage(Model model) {
+        model.addAttribute("popularPosts", this.postService.getPopularList(5));
         return "home";
     }
 
@@ -57,7 +62,8 @@ public class UserController {
     }
 
     @GetMapping("/home")
-    public String showHomePage() {
+    public String showHomePage(Model model) {
+        model.addAttribute("popularPosts", this.postService.getPopularList(5));
         return "home";
     }
 

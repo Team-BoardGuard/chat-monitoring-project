@@ -2,69 +2,218 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>커뮤니티 홈</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>EYOOM PORTAL</title>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 </head>
 <body>
-    <div class="container">
-        <!-- Conditional Header based on Spring Security authentication -->
-        <div sec:authorize="isAuthenticated()" id="top-bar-logged-in" class="top-bar profile-bar">
-            <div class="profile-pic"></div>
-            <span class="profile-name" th:text="${currentUser?.nickname}"></span> <!-- Display nickname -->
-            <a th:href="@{/logout}">로그아웃</a>
-        </div>
 
-        <div sec:authorize="isAnonymous()" id="top-bar-logged-out" class="top-bar">
-            <a th:href="@{/login}">로그인</a> | <a th:href="@{/signup}">회원가입</a>
+    <div class="header-container">
+        <div class="top-nav">
+            <a href="#">사이트 이용안내 (이용안내 및 게시판, 포인트 관련) ></a>
         </div>
-
-        <header>
-            <h1>커뮤니티</h1>
+        <div class="main-header">
+            <a th:href="@{/}" class="logo">EYOOM<span>PORTAL</span></a>
             <div class="search-bar">
-                <input type="text" placeholder="게시글 검색..." class="search-input">
-                <button type="submit">검색</button>
+                <input type="text" placeholder="전체검색">
+                <button type="submit">Q</button> <!-- Using Q as a placeholder for search icon -->
             </div>
-        </header>
-
-        <nav>
-            <ul>
-                <li><a th:href="@{/home}"><i>🏠</i> 홈</a></li>
-                <li><a th:href="@{/gallery}"><i>🖼️</i> 갤러리</a></li>
-                <li><a th:href="@{/freeboard}"><i>📝</i> 자유게시판</a></li>
-                <li><a th:href="@{/my-info}"><i>👤</i> 내 정보</a></li>
+            <div class="auth-links">
+                <a sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
+                <a sec:authorize="isAnonymous()" th:href="@{/signup}">회원가입</a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/my-info}" th:text="${#authentication.principal.username} + '님'"></a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
+            </div>
+        </div>
+        <!-- Samsung-style Navigation Bar -->
+        <nav class="samsung-nav">
+            <ul class="samsung-nav-list">
+                <li class="samsung-nav-item"><a th:href="@{/}" class="samsung-nav-link">홈</a></li>
+                <li class="samsung-nav-item"><a th:href="@{/gallery}" class="samsung-nav-link">갤러리</a></li>
+                <li class="samsung-nav-item"><a th:href="@{/post/list}" class="samsung-nav-link">커뮤니티</a></li>
+                <li class="samsung-nav-item"><a href="#" class="samsung-nav-link">공지사항</a></li>
             </ul>
         </nav>
-
-        <main>
-            <div class="board-list-main">
-                <h2>최신 게시글</h2>
-                <p>공지: 커뮤니티 이용 수칙 안내</p>
-                <p>자유: 오늘 점심 뭐 먹지?</p>
-                <p>질문: Spring Boot 설정 질문합니다.</p>
-                <p>유머: ㅋㅋㅋ 오늘 있었던 일</p>
-                <p>사진: 주말 나들이 사진</p>
-                <!-- 실시간으로 올라오는 게시글 목록이 여기에 표시됩니다. -->
-            </div>
-
-            <div class="board-categories">
-                <h2>게시판 카테고리</h2>
-                <ul>
-                    <li><a href="#">전체 게시판</a></li>
-                    <li><a href="#">주요 갤러리</a></li>
-                    <li><a href="#">일반 게시판</a></li>
-                    <li><a href="#">정보 게시판</a></li>
-                </ul>
-            </div>
-
-            <div class="image-showcase">
-                <h2>추천 이미지</h2>
-                <!-- 이미지가 여기에 표시됩니다. -->
-            </div>
-        </main>
-
-        <footer>
-            <p>&copy; 2025 커뮤니티. All rights reserved.</p>
-        </footer>
     </div>
+
+    <div class="card-carousel-section">
+        <!-- Swiper -->
+        <div class="swiper-container card-swiper">
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <div class="swiper-slide">
+                    <div class="image-card">
+                        <img th:src="@{/img/exercise.jpg}" alt="운동">
+                        <div class="card-overlay">
+                            <div class="card-category">운동</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="image-card">
+                        <img th:src="@{/img/game.jpg}" alt="게임">
+                        <div class="card-overlay">
+                            <div class="card-category">게임</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="image-card">
+                        <img th:src="@{/img/music.jpg}" alt="음악">
+                        <div class="card-overlay">
+                            <div class="card-category">음악</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="image-card">
+                        <img th:src="@{/img/movie.jpg}" alt="영화">
+                        <div class="card-overlay">
+                            <div class="card-category">영화</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                     <div class="image-card">
+                        <img th:src="@{/img/travel.jpg}" alt="여행">
+                        <div class="card-overlay">
+                            <div class="card-category">여행</div>
+                        </div>
+                    </div>
+                </div>
+				<div class="swiper-slide">
+                     <div class="image-card">
+                        <img th:src="@{/img/study.jpg}" alt="자기 계발">
+                        <div class="card-overlay">
+                            <div class="card-category">자기 계발</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+
+    <div class="latest-posts-section">
+        <h2>커뮤니티 최신글</h2>
+        <div class="post-tabs">
+            <button class="active">자유게시판</button>
+            <button>유머게시판</button>
+            <button>질문과답변</button>
+        </div>
+        <div class="post-list">
+            <table>
+                <tbody>
+                    <!-- Placeholder post rows -->
+                    <tr>
+                        <td class="post-title">요즘 영화 볼만한거 있을까요?</td>
+                        <td class="post-likes">+5</td>
+                        <td class="post-author">할인의추억 <img src="https://via.placeholder.com/20" alt=""></td>
+                    </tr>
+                    <tr>
+                        <td class="post-title">오늘은 날씨가 정말 좋은거 같아요!</td>
+                        <td class="post-likes">+1</td>
+                        <td class="post-author">레인보우 <img src="https://via.placeholder.com/20" alt=""></td>
+                    </tr>
+                    <tr>
+                        <td class="post-title">요즘 핫한 패션 트랜드는 무엇인가요?</td>
+                        <td class="post-likes">+1</td>
+                        <td class="post-author">시베리안허숙희 <img src="https://via.placeholder.com/20" alt=""></td>
+                    </tr>
+                    <tr>
+                        <td class="post-title">정상적으로 출근하였습니다? ㅋㅋ</td>
+                        <td class="post-likes">+3</td>
+                        <td class="post-author">백마탄환자 <img src="https://via.placeholder.com/20" alt=""></td>
+                    </tr>
+                     <tr>
+                        <td class="post-title">컴퓨터를 새로 하나 주문하였는데요~</td>
+                        <td class="post-likes">+2</td>
+                        <td class="post-author">겨울비 <img src="https://via.placeholder.com/20" alt=""></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-top">
+                <div class="footer-logo">EYOOM PORTAL</div>
+                <div class="footer-links">
+                    <div>
+                        <h4>뉴스게시판</h4>
+                        <ul>
+                            <li><a href="#">IT</a></li>
+                            <li><a href="#">경제</a></li>
+                            <li><a href="#">정치</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>커뮤니티</h4>
+                        <ul>
+                            <li><a href="#">자유게시판</a></li>
+                            <li><a href="#">유머게시판</a></li>
+                            <li><a href="#">질문과 답변</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>고객지원</h4>
+                        <ul>
+                            <li><a href="#">공지사항</a></li>
+                            <li><a href="#">자주묻는 질문</a></li>
+                            <li><a href="#">서비스이용약관</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>주식회사 ㅇㅇㅇㅇ | 대표: 홍길동 | 사업자등록번호: 000-00-00000 | 통신판매업: 제2023-서울-00000호</p>
+                <p>주소: 04528 서울 중구 세종대로 40 (남대문로4가) | 전화: 012-3456-7890 | 이메일: webmaster@domain.com</p>
+                <p>Copyright &copy; EYOOM COMM. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".card-swiper", {
+            loop: true,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            // Responsive breakpoints
+            breakpoints: {
+                // when window width is >= 320px
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 20
+                },
+                // when window width is >= 768px
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
+                // when window width is >= 992px
+                992: {
+                    slidesPerView: 3,
+                    spaceBetween: 20
+                },
+                // when window width is >= 1200px
+                1200: {
+                    slidesPerView: 4,
+                    spaceBetween: 20
+                }
+            }
+        });
+    </script>
 </body>
 </html>
